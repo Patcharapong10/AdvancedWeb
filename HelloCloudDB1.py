@@ -5,7 +5,7 @@ from flask_marshmallow import Marshmallow
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] ='postgresql://webadmin:CVDggg44341@node8590-advweb-16.app.ruk-com.cloud:11073/CloudDB'
+app.config['SQLALCHEMY_DATABASE_URI'] ='postgresql://webadmin:CVDggg44341@10.100.2.186:5432/CloudDB'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -24,6 +24,52 @@ class Staffs(db.Model):
         self.name = name
         self.email = email
         self.phone = phone
+
+# Create a Staff
+@app.route('/staff', methods=['POST'])
+def add_staff():
+    id = request.json['id']
+    name = request.json['name']
+    email = request.json['email']
+    phone = request.json['phone']
+
+    new_staff = Staffs(id, name, email, phone)
+
+    db.session.add(new_staff)
+    db.session.commit()
+
+    return staff_schema.jsonify(new_staff)
+
+
+
+# Update a Staff
+@app.route('/staff/<id>', methods=['PUT'])
+def update_staff(id):
+    staff = Staffs.query.get(id)
+    
+    name = request.json['name']
+    email = request.json['email']
+    phone = request.json['phone']
+
+    staff.name = name
+    staff.email = email
+    staff.phone = phone
+
+    db.session.commit()
+
+    return staff_schema.jsonify(staff)
+
+
+
+# Delete Staff
+@app.route('/staff/<id>', methods=['DELETE'])
+def delete_staff(id):
+    staff = Staffs.query.get(id)
+    db.session.delete(staff)
+    db.session.commit()
+    
+    return staff_schema.jsonify(staff)
+
 
 # Staff Schema
 class StaffSchema(ma.Schema):
