@@ -1,6 +1,11 @@
 from flask import Flask,render_template,request,make_response,jsonify
 import pymongo
 
+app = Flask(__name__)
+client = pymongo.MongoClient("mongodb://admin:GFHsax21310@10.100.2.83:27017")  #ใส่username and passwd IP ของโหนด MongoDB
+db = client["Ass1"]  #ชิ่อของDatabase
+
+
 class mongo_connection:
   conn = None
 
@@ -24,11 +29,16 @@ def index():
 
 @app.route('/Car', methods=['GET'])
 def getrestaurants(): 
-    carname = request.args.get('_name')
-    model = request.args.get('_model')
-    price = request.args.get('_price')
+    # carname = request.args.get('_name')
+    # model = request.args.get('_model')
+    # price = request.args.get('_price')
 
-    print(carname,model,price)
+    # print(carname,model,price)
+    Data = db.find({ })
+
+    return Data
+
+    #cursor = db.query(filters)
 
 
 if __name__ == "__main__":
