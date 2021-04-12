@@ -13,8 +13,8 @@ db = client["Ass1"]  #ชิ่อของDatabase
 
 @app.route("/") #เช็คว่า Conect ได้หรือป่าว
 def index(): 
-    texts = "Hello World"
-    return texts
+    emp_list = db.Car.find()
+    return render_template('index.html', emp_list = emp_list)
 
 #ดูข้อมูลใน Database ทั้งหมด
 @app.route("/Car", methods=['GET'])

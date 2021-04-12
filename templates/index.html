@@ -19,22 +19,12 @@
    </head>
 
    <body>   	
-        <div class="container-fluid">      	
-            <div class="row">
-                <div class="col-6">
-                    <div class="row">
-                        {{message}}
-                    </div>
-      	            <div class="row">
-           	            <input type="text" id = "_model" class="form-control mt-2" placeholder="City" required>
-                    </div>       
-	                <div class="row">
-        	            <input type="text" id = "_price" class="form-control mt-2" placeholder="State" required>
-                    </div>
-
-                </div>     
-            </div>        
-	    </div>
-
+    {% for emp in emp_list %}
+    <tr>
+       <td>{{ emp['_name'] }}</td>
+       <td>{{ emp['_model'] }}</td>
+       <td>{{ emp['_price'] }}</td>
+    </tr>
+    {% endfor %}
     </body>
 </html>
